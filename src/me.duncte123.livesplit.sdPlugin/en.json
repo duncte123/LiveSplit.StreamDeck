@@ -1,0 +1,24 @@
+{
+  "Description": "Easy control of LiveSplit (via LiveSplit.Server)!",
+  "Name": "LiveSplit",
+  "Category": "LiveSplit",
+  "me.duncte123.livesplit.split": {
+    "Name": "Split",
+    "Tooltip": "Split!"
+  },
+  "Localization": {
+    "Computer IP": "Computer IP",
+    "Server Port": "Server Port",
+    "Reconnect": "(Re)connect",
+
+    "More info": "More info",
+    "Message": "Message",
+    "Click Me": "Click Me",
+    "Button": "Button",
+    "More": "More",
+    "My name": "My name",
+    "My title": "My title",
+    "My message": "My message",
+    "My button": "My button"
+  }
+}
