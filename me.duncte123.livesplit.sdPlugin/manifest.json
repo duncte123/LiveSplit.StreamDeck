@@ -1,7 +1,6 @@
 {
   "Nodejs": {
-    "Version": "20",
-    "Debug": "enabled"
+    "Version": "20"
   },
   "UUID": "me.duncte123.livesplit",
   "SDKVersion": 2,
@@ -10,10 +9,10 @@
   "Description": "Control LiveSplit via the LiveSplit.Server component!",
   "Name": "LiveSplit",
   "Icon": "imgs/plugin/livesplit_icon",
-  "URL": "https://www.elgato.com/en/gaming/stream-deck",
+  "URL": "https://github.com/duncte123/LiveSplit.StreamDeck",
   "Version": "1.0.0",
   "Software": {
-    "MinimumVersion": "6.4"
+    "MinimumVersion": "6.5"
   },
   "OS": [
     {

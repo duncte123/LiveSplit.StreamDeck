@@ -5,7 +5,7 @@ function attemptedLiveSplitConnection(success) {
     if (success) {
         connInfo.style.display = 'none';
         statusField.innerHTML = $PI.localize('Connected');
-        statusField.removeAttribute('style');
+        statusField.style.color ='green';
         console.log('Successfully connected to LiveSplit!');
     } else {
         connInfo.style.display = 'block';

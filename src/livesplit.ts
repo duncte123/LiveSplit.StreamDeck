@@ -50,8 +50,8 @@ export class LiveSplit extends EventEmitter {
             this.socket!.on('error', (err) => {
                 this.connecting = false;
                 this.logger.error('Connection to livesplit failed', err);
-                // this.emit('error', err); // TODO: somehow this causes an uncaught exception?????
                 reject(err);
+                // this.emit('error', err); // TODO: somehow this causes an uncaught exception?????
             });
 
             this.socket!.on('close', () => {
@@ -121,27 +121,38 @@ export class LiveSplit extends EventEmitter {
         this.socket!.write(nextCommand.command);
     }
 
-    private async send(data: string, expectResponse: boolean = false): Promise<boolean | any> {
+    private parseCommand(data: string): string {
+        const noNewlines = data.replace(/\n/g, '')
+            .replace(/\r/g, '').trim();
+
+        return `${noNewlines}\r\n`;
+    }
+
+    private async sendWithResponse(data: string): Promise<string> {
         if (!this.connected) {
             throw new Error('Not connected to livesplit!');
         }
 
-        const noNewlines = data.replace(/\n/g, '')
-            .replace(/\r/g, '').trim();
-        const command = `${noNewlines}\r\n`;
+        const command = this.parseCommand(data);
 
-        if (expectResponse) {
-            return new Promise<any>((resolve, reject) => {
-                this.commands.push({
-                    command,
-                    resolve,
-                });
-
-                if (!this.processingCommands) {
-                    this.sendNext();
-                }
+        return new Promise<any>((resolve) => {
+            this.commands.push({
+                command,
+                resolve,
             });
+
+            if (!this.processingCommands) {
+                this.sendNext();
+            }
+        });
+    }
+
+    private async send(data: string): Promise<boolean> {
+        if (!this.connected) {
+            throw new Error('Not connected to livesplit!');
         }
+
+        const command = this.parseCommand(data);
 
         if (this.processingCommands) {
             this.commandsWithoutResponse.push(command);

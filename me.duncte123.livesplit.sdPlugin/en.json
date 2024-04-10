@@ -1,5 +1,5 @@
 {
-  "Description": "Easy control of LiveSplit (via LiveSplit.Server)!",
+  "Description": "Extremely easy control of LiveSplit via the LiveSplit.Server component!",
   "Name": "LiveSplit",
   "Category": "LiveSplit",
   "me.duncte123.livesplit.split": {
@@ -15,16 +15,6 @@
     "Connected": "Connected",
     "Connection Error": "Connection Error",
     "Please check that the LiveSplit server is enabled": "Please check that the LiveSplit server is enabled",
-    "To enable the server: right click LiveSplit > control > start server": "To enable the server: right click LiveSplit > control > start server",
-
-    "More info": "More info",
-    "Message": "Message",
-    "Click Me": "Click Me",
-    "Button": "Button",
-    "More": "More",
-    "My name": "My name",
-    "My title": "My title",
-    "My message": "My message",
-    "My button": "My button"
+    "To enable the server: right click LiveSplit > control > start server": "To enable the server: right click LiveSplit > control > start server"
   }
 }
