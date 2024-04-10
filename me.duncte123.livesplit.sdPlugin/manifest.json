@@ -10,7 +10,7 @@
   "Name": "LiveSplit",
   "Icon": "imgs/plugin/livesplit_icon",
   "URL": "https://github.com/duncte123/LiveSplit.StreamDeck",
-  "Version": "1.0.0",
+  "Version": "1.0.0.0",
   "Software": {
     "MinimumVersion": "6.5"
   },
