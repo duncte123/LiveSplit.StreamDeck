@@ -67,6 +67,19 @@
           "Title": "Reset"
         }
       ]
+    },
+    {
+      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Name": "Skip Split",
+      "Tooltip": "Skip a split",
+      "UUID": "me.duncte123.livesplit.skip",
+      "States": [
+        {
+          "Image": "imgs/plugin/livesplit_icon_flat",
+          "TitleAlignment": "bottom",
+          "Title": "Skip"
+        }
+      ]
     }
   ]
 }

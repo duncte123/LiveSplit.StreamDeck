@@ -163,6 +163,10 @@ export class LiveSplit extends EventEmitter {
     async reset(): Promise<boolean> {
         return this.send('reset');
     }
+
+    async skipSplit(): Promise<boolean> {
+        return this.send('skipsplit');
+    }
 }
 
 export const instance = new LiveSplit();
