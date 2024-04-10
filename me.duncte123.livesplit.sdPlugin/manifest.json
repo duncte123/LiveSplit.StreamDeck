@@ -1,12 +1,15 @@
 {
+  "Nodejs": {
+    "Version": "20",
+    "Debug": "enabled"
+  },
   "UUID": "me.duncte123.livesplit",
   "SDKVersion": 2,
   "Author": "duncte123",
-  "CodePath": "app.html",
-  "todo-CodePathWin": "BridgeFromSocketToWS.exe (or might just release a separate java application lol)",
+  "CodePath": "bin/plugin.js",
   "Description": "Control LiveSplit via the LiveSplit.Server component!",
   "Name": "LiveSplit",
-  "Icon": "assets/livesplit_icon",
+  "Icon": "imgs/plugin/livesplit_icon",
   "URL": "https://www.elgato.com/en/gaming/stream-deck",
   "Version": "1.0.0",
   "Software": {
@@ -14,22 +17,26 @@
   },
   "OS": [
     {
+      "Platform": "mac",
+      "MinimumVersion": "10.15"
+    },
+    {
       "Platform": "windows",
       "MinimumVersion": "10"
     }
   ],
   "Category": "LiveSplit",
-  "CategoryIcon": "assets/livesplit_icon_flat",
+  "CategoryIcon": "imgs/plugin/livesplit_icon_flat",
   "PropertyInspectorPath": "default-property-inspector/inspector.html",
   "Actions": [
     {
-      "Icon": "assets/livesplit_icon_flat",
+      "Icon": "imgs/plugin/livesplit_icon_flat",
       "Name": "Split",
       "Tooltip": "Start or split your timer",
       "UUID": "me.duncte123.livesplit.split",
       "States": [
         {
-          "Image": "assets/livesplit_icon_flat",
+          "Image": "imgs/plugin/livesplit_icon_flat",
           "TitleAlignment": "bottom",
           "Title": "Split"
         }

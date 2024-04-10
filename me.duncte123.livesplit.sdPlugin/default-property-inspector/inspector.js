@@ -1,7 +1,14 @@
-/// <reference path="../../../libs/js/property-inspector.js" />
-/// <reference path="../../../libs/js/utils.js" />
+/// <reference path="../libs/js/property-inspector.js" />
+/// <reference path="../libs/js/utils.js" />
 
 let activeTab = '';
+
+const defaultSettings = Object.freeze({
+    ip: '127.0.0.1',
+    port: '16834',
+});
+
+let currentSettings = defaultSettings;
 
 $PI.onConnected((jsn) => {
     const form = document.querySelector('#property-inspector');
@@ -9,31 +16,53 @@ $PI.onConnected((jsn) => {
     const {payload, context} = actionInfo;
     const {settings} = payload;
 
-    Utils.setFormValue(settings, form);
+    // Request the current global settings
+    $PI.getGlobalSettings();
 
     form.addEventListener(
         'input',
         Utils.debounce(150, () => {
             const value = Utils.getFormValue(form);
-            $PI.setSettings(value);
+            currentSettings = value;
+            $PI.setGlobalSettings(value);
         })
     );
+
+    $PI.onSendToPropertyInspector($PI.actionInfo.action, (jsn) => {
+        const { event, success } = jsn.payload;
+
+        switch (event) {
+            case 'ls-reconnect':
+                attemptedLiveSplitConnection(success);
+                break;
+        }
+
+        console.log('onSendToPropertyInspector', JSON.stringify(jsn));
+    });
 });
 
 $PI.onDidReceiveGlobalSettings(({payload}) => {
-    console.log('onDidReceiveGlobalSettings', payload);
-})
+    const {settings} = payload;
+    const form = document.querySelector('#property-inspector');
 
-/**
- * Provide window level functions to use in the external window
- * (this can be removed if the external window is not used)
- */
-window.sendToInspector = (data) => {
-    console.log(data);
-};
+    currentSettings = {
+        ...defaultSettings,
+        ...settings,
+    };
 
-document.querySelector('#open-external').addEventListener('click', () => {
-    window.open('../../../external.html');
+    Utils.setFormValue(currentSettings, form);
+
+    console.log('onDidReceiveGlobalSettings', JSON.stringify(payload));
+});
+
+document.querySelector('#connect-livesplit').addEventListener('click', () => {
+    // save settings
+    $PI.setGlobalSettings(currentSettings);
+
+    // Connect to livesplit!
+    $PI.sendToPlugin({
+        event: 'ls-reconnect',
+    });
 });
 
 
@@ -69,13 +98,13 @@ function activateTabs(activeTab) {
     let activeTabEl = null;
     allTabs.forEach((el, i) => {
         el.onclick = () => clickTab(el);
-        if(el.dataset?.target === activeTab) {
+        if (el.dataset?.target === activeTab) {
             activeTabEl = el;
         }
     });
-    if(activeTabEl) {
+    if (activeTabEl) {
         clickTab(activeTabEl);
-    } else if(allTabs.length) {
+    } else if (allTabs.length) {
         clickTab(allTabs[0]);
     }
 }
@@ -86,10 +115,10 @@ function clickTab(clickedTab) {
     clickedTab.classList.add('selected');
     activeTab = clickedTab.dataset?.target;
     allTabs.forEach((el, i) => {
-        if(el.dataset.target) {
+        if (el.dataset.target) {
             const t = document.querySelector(el.dataset.target);
-            if(t) {
-                t.style.display = el == clickedTab ? 'block' : 'none';
+            if (t) {
+                t.style.display = el === clickedTab ? 'block' : 'none';
             }
         }
     });

@@ -1,3 +1,6 @@
 [submodule "src/me.duncte123.livesplit.sdPlugin/libs"]
 	path = src/me.duncte123.livesplit.sdPlugin/libs
 	url = https://github.com/elgatosf/streamdeck-javascript-sdk
+[submodule "me.duncte123.livesplit.sdPlugin/libs"]
+	path = me.duncte123.livesplit.sdPlugin/libs
+	url = https://github.com/elgatosf/streamdeck-javascript-sdk

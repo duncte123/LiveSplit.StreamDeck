@@ -1,8 +1,6 @@
 # LiveSplit.StreamDeck
 
-Using `LiveSplit.Server` to control livesplit via your streamdeck.
-
-Sooooooooooooo, turns out that browsers do not support raw TCP sockets. And the stream deck app is chrome. Stay tuned to see what I come up with to get around this :)
+Using `LiveSplit.Server` to control LiveSplit via your Stream Deck.
 
 ## Why
 I always find myself accidentally hitting hotkeys when typing stuff out because I want keep the key combos simple.
