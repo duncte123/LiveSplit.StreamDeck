@@ -3,6 +3,8 @@ import streamDeck, { Action, LogLevel } from '@elgato/streamdeck';
 import { Split } from './actions/split';
 import { LivesplitSettings } from './actions/base/livesplit-settings';
 import { instance } from './livesplit';
+import { Unsplit } from './actions/unsplit';
+import { Reset } from './actions/reset';
 
 async function doConnect(action: Action<LivesplitSettings>, reconnect = false) {
     if (instance.isConnected && !reconnect) {
@@ -44,11 +46,27 @@ streamDeck.ui.onSendToPlugin<{ event: string }, LivesplitSettings>(async ({ payl
     }
 });
 
-// We can enable "trace" logging so that all messages between the Stream Deck, and the plugin are recorded. When storing sensitive information
+// TODO: device disconnect, auto disconnect from LS when no devices are connected
+
 streamDeck.logger.setLevel(LogLevel.TRACE);
 
-// Register the increment action.
 streamDeck.actions.registerAction(new Split());
+streamDeck.actions.registerAction(new Unsplit());
+streamDeck.actions.registerAction(new Reset());
 
-// Finally, connect to the Stream Deck.
-streamDeck.connect();
+async function registerDefaultSettings() {
+    const defaultSettings = Object.freeze({
+        ip: '127.0.0.1',
+        port: '16834',
+    });
+    const settings = await streamDeck.settings.getGlobalSettings<LivesplitSettings>();
+
+    await streamDeck.settings.setGlobalSettings({
+        ...defaultSettings,
+        ...settings,
+    });
+}
+
+streamDeck.connect().then(() => {
+    registerDefaultSettings();
+});

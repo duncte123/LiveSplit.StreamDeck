@@ -41,6 +41,32 @@
           "Title": "Split"
         }
       ]
+    },
+    {
+      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Name": "Undo Split",
+      "Tooltip": "Undo a split that you just did",
+      "UUID": "me.duncte123.livesplit.unsplit",
+      "States": [
+        {
+          "Image": "imgs/plugin/livesplit_icon_flat",
+          "TitleAlignment": "bottom",
+          "Title": "Undo Split"
+        }
+      ]
+    },
+    {
+      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Name": "Reset Timer",
+      "Tooltip": "Undo a split that you just did",
+      "UUID": "me.duncte123.livesplit.reset",
+      "States": [
+        {
+          "Image": "imgs/plugin/livesplit_icon_flat",
+          "TitleAlignment": "bottom",
+          "Title": "Reset"
+        }
+      ]
     }
   ]
 }
