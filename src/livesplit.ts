@@ -67,7 +67,7 @@ export class LiveSplit extends EventEmitter {
     }
 
     private async send(data: string): Promise<void> {
-        //
+        this.socket!.write(`${data}\r\n`);
     }
 
     async startOrSplit(): Promise<void> {

@@ -15,6 +15,7 @@ export class Split extends SingletonAction<LivesplitSettings> {
             return ev.action.showAlert();
         }
 
+        await livesplit.startOrSplit();
         await ev.action.showOk();
     }
 }

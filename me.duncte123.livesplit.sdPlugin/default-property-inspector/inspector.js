@@ -10,11 +10,15 @@ const defaultSettings = Object.freeze({
 
 let currentSettings = defaultSettings;
 
+let count = 0;
+
 $PI.onConnected((jsn) => {
     const form = document.querySelector('#property-inspector');
     const {actionInfo, appInfo, connection, messageType, port, uuid} = jsn;
     const {payload, context} = actionInfo;
     const {settings} = payload;
+
+    console.log('loaded??', ++count);
 
     // Request the current global settings
     $PI.getGlobalSettings();
@@ -32,7 +36,7 @@ $PI.onConnected((jsn) => {
         const { event, success } = jsn.payload;
 
         switch (event) {
-            case 'ls-reconnect':
+            case 'ls-connect':
                 attemptedLiveSplitConnection(success);
                 break;
         }
@@ -51,6 +55,10 @@ $PI.onDidReceiveGlobalSettings(({payload}) => {
     };
 
     Utils.setFormValue(currentSettings, form);
+
+    $PI.sendToPlugin({
+        event: 'ls-connect',
+    });
 
     console.log('onDidReceiveGlobalSettings', JSON.stringify(payload));
 });
