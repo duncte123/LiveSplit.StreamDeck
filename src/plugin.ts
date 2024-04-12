@@ -2,13 +2,13 @@ import streamDeck, { Action, LogLevel } from '@elgato/streamdeck';
 
 import { Split } from './actions/split';
 import { LivesplitSettings } from './actions/base/livesplit-settings';
-import { instance } from './livesplit';
+import { instance as livesplit } from './livesplit';
 import { Unsplit } from './actions/unsplit';
 import { Reset } from './actions/reset';
 import { Skip } from './actions/skip';
 
 async function doConnect(action: Action<LivesplitSettings>, reconnect = false) {
-    if (instance.isConnected && !reconnect) {
+    if (livesplit.isConnected && !reconnect) {
         await action.sendToPropertyInspector({
             event: 'ls-connect',
             success: true,
@@ -19,7 +19,7 @@ async function doConnect(action: Action<LivesplitSettings>, reconnect = false) {
     const { ip, port } = await streamDeck.settings.getGlobalSettings<LivesplitSettings>();
 
     try {
-        await instance.connect(ip, port);
+        await livesplit.connect(ip, port);
         await action.sendToPropertyInspector({
             event: 'ls-connect',
             success: true,
@@ -47,7 +47,14 @@ streamDeck.ui.onSendToPlugin<{ event: string }, LivesplitSettings>(async ({ payl
     }
 });
 
-// TODO: device disconnect, auto disconnect from LS when no devices are connected
+function disconnectLS() {
+    if (livesplit.isConnected) {
+        livesplit.disconnect();
+    }
+}
+
+process.on('exit', () => { disconnectLS(); });
+process.on('SIGINT', () => { disconnectLS(); });
 
 streamDeck.logger.setLevel(LogLevel.TRACE);
 
