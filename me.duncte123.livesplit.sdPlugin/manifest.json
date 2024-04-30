@@ -8,7 +8,7 @@
   "CodePath": "bin/plugin.js",
   "Description": "Control LiveSplit via the LiveSplit.Server component!",
   "Name": "LiveSplit",
-  "Icon": "imgs/plugin/livesplit_icon",
+  "Icon": "imgs/plugin/livesplit_icon_store",
   "URL": "https://github.com/duncte123/LiveSplit.StreamDeck",
   "Version": "1.0.0.0",
   "Software": {
