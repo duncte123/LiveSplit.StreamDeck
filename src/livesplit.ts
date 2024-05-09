@@ -57,6 +57,7 @@ export class LiveSplit extends EventEmitter {
             this.socket!.on('close', () => {
                 this.connected = false;
                 this.connecting = false;
+                this.logger.info('LiveSplit disconnected!');
                 this.emit('disconnected');
             });
 
