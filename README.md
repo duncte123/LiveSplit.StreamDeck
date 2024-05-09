@@ -22,6 +22,8 @@ Before opening a support ticket please make sure that you have double-checked th
 - The LiveSplit server component is added to your layout
 - You have started the server (you need to do this every time you launch livesplit)
   - Start the server by right-clicking on LiveSplit -> Control -> Start Server
+ 
+The split button does currently not reset the timer (limitation of LiveSplit), you will need to press the reset button.
 
 # Why
 I always find myself accidentally hitting hotkeys when typing stuff out because I want to keep the key combos simple.
