@@ -66,27 +66,22 @@ export class LiveSplit extends EventEmitter {
                 this.emit('disconnected');
             });
 
+            const connectedCb = () => {
+                this.connecting = false;
+                this.connected = true;
+                this.emit('connected');
+                this.logger.info('LiveSplit connected!');
+                resolve();
+            };
+
             if (settings.localPipe) {
-                // TODO: connect to the pipe
                 this.logger.info(`Connecting to ${PIPE_LOCATION}...`);
-                this.socket!.connect(PIPE_LOCATION, () => {
-                    this.connecting = false;
-                    this.connected = true;
-                    this.emit('connected');
-                    this.logger.info('LiveSplit connected!');
-                    resolve();
-                });
+                this.socket!.connect(PIPE_LOCATION, connectedCb);
             } else {
                 const { ip, port } = settings;
 
                 this.logger.info(`Connecting to ${ip}:${port}...`);
-                this.socket!.connect(port, ip, () => {
-                    this.connecting = false;
-                    this.connected = true;
-                    this.emit('connected');
-                    this.logger.info('LiveSplit connected!');
-                    resolve();
-                });
+                this.socket!.connect(port, ip, connectedCb);
             }
         });
     }
