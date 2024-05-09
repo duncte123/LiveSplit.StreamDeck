@@ -27,8 +27,15 @@ $PI.onConnected((jsn) => {
         'input',
         Utils.debounce(150, () => {
             const value = Utils.getFormValue(form);
+
+            value.localPipe = value.localPipe === 'localPipeOn';
             currentSettings = value;
+
+            setIpPortVisibility(currentSettings.localPipe);
             $PI.setGlobalSettings(value);
+            $PI.sendToPlugin({
+                event: 'ls-reconnect',
+            });
         })
     );
 
@@ -54,7 +61,14 @@ $PI.onDidReceiveGlobalSettings(({payload}) => {
         ...settings,
     };
 
-    Utils.setFormValue(currentSettings, form);
+    setIpPortVisibility(currentSettings.localPipe);
+
+    const formSettings = {
+        ...currentSettings,
+        localPipe: currentSettings.localPipe? 'localPipeOn' : undefined,
+    };
+
+    Utils.setFormValue(formSettings, form);
 
     $PI.sendToPlugin({
         event: 'ls-connect',
@@ -62,6 +76,14 @@ $PI.onDidReceiveGlobalSettings(({payload}) => {
 
     console.log('onDidReceiveGlobalSettings', JSON.stringify(payload));
 });
+
+function setIpPortVisibility(usingLocalPipe) {
+    const items = document.querySelectorAll('.ipAndPort');
+
+    items.forEach((item) => {
+        item.style.display = usingLocalPipe ? 'none' : 'flex';
+    });
+}
 
 document.querySelector('#connect-livesplit').addEventListener('click', () => {
     // save settings

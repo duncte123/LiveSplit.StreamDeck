@@ -16,8 +16,17 @@
 <div class="sdpi-wrapper">
     <hr class="tab-separator">
     <form id="property-inspector">
+        <div type="checkbox" class="sdpi-item">
+            <div data-localize class="sdpi-item-label">Use local pipe</div>
+            <input data-localize class="sdpi-item-value sdProperty"
+                   name="localPipe"
+                   id="localPipe"
+                   value="localPipeOn"
+                   type="checkbox"/>
+            <label for="localPipe"><span></span></label>
+        </div>
 
-        <div class="sdpi-item">
+        <div class="sdpi-item ipAndPort">
             <div data-localize class="sdpi-item-label">Computer IP</div>
             <input data-localize class="sdpi-item-value"
                    name="ip"
@@ -26,7 +35,7 @@
                    placeholder="127.0.0.1"/>
         </div>
 
-        <div class="sdpi-item">
+        <div class="sdpi-item ipAndPort">
             <div data-localize class="sdpi-item-label">Server Port</div>
             <input data-localize class="sdpi-item-value"
                    name="port"

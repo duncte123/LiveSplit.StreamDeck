@@ -16,16 +16,21 @@ async function doConnect(action: Action<LivesplitSettings>, reconnect = false) {
         return;
     }
 
-    const { ip, port } = await streamDeck.settings.getGlobalSettings<LivesplitSettings>();
+    const settings = await streamDeck.settings.getGlobalSettings<LivesplitSettings>();
 
     try {
-        await livesplit.connect(ip, port);
+        if (livesplit.isConnected) {
+            livesplit.disconnect();
+        }
+
+        await livesplit.connect(settings);
         await action.sendToPropertyInspector({
             event: 'ls-connect',
             success: true,
         });
         await action.showOk();
     } catch (error: any) {
+        streamDeck.logger.error('connection failed', error);
         await action.sendToPropertyInspector({
             event: 'ls-connect',
             success: false,
@@ -67,13 +72,18 @@ async function registerDefaultSettings() {
     const defaultSettings = Object.freeze({
         ip: '127.0.0.1',
         port: '16834',
+        localPipe: true,
     });
     const settings = await streamDeck.settings.getGlobalSettings<LivesplitSettings>();
-
-    await streamDeck.settings.setGlobalSettings({
+    const parsedSettings = {
         ...defaultSettings,
         ...settings,
-    });
+    };
+
+    // Force use the local pipe if the ip is local host
+    parsedSettings.localPipe = parsedSettings.ip === '127.0.0.1';
+
+    await streamDeck.settings.setGlobalSettings(parsedSettings);
 }
 
 streamDeck.connect().then(() => {

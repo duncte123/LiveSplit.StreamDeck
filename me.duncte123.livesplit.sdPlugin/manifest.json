@@ -1,6 +1,7 @@
 {
   "Nodejs": {
-    "Version": "20"
+    "Version": "20",
+    "Debug": "enabled"
   },
   "UUID": "me.duncte123.livesplit",
   "SDKVersion": 2,
@@ -10,15 +11,11 @@
   "Name": "LiveSplit",
   "Icon": "imgs/plugin/livesplit_icon_store",
   "URL": "https://github.com/duncte123/LiveSplit.StreamDeck",
-  "Version": "1.0.0.0",
+  "Version": "1.1.0.0",
   "Software": {
     "MinimumVersion": "6.5"
   },
   "OS": [
-    {
-      "Platform": "mac",
-      "MinimumVersion": "10.15"
-    },
     {
       "Platform": "windows",
       "MinimumVersion": "10"

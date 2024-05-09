@@ -1,6 +1,7 @@
 import { Socket } from 'node:net';
 import { EventEmitter } from 'node:events';
 import streamdeck from '@elgato/streamdeck';
+import { LivesplitSettings } from './actions/base/livesplit-settings';
 
 export interface LiveSplit {
     on(event: 'connected', listener: () => void): this;
@@ -8,6 +9,9 @@ export interface LiveSplit {
     on(event: 'error', listener: (error: Error) => void): this;
     on(event: 'data', listener: (data: string) => void): this;
 }
+
+// Using the pipe is preferred as the TCP server does not have to be running for it to work.
+const PIPE_LOCATION = '\\\\.\\pipe\\LiveSplit';
 
 /**
  * This is https://github.com/satanch/node-livesplit-client but rewritten for TypeScript.
@@ -26,7 +30,7 @@ export class LiveSplit extends EventEmitter {
     private logger = streamdeck.logger;
     private connecting = false;
 
-    async connect(ip: string, port: number): Promise<void> {
+    async connect(settings: LivesplitSettings): Promise<void> {
         if (this.connecting) {
             return;
         }
@@ -49,6 +53,7 @@ export class LiveSplit extends EventEmitter {
 
             this.socket!.on('error', (err) => {
                 this.connecting = false;
+                this.connected = false;
                 this.logger.error('Connection to livesplit failed', err);
                 reject(err);
                 // this.emit('error', err); // TODO: somehow this causes an uncaught exception?????
@@ -61,15 +66,29 @@ export class LiveSplit extends EventEmitter {
                 this.emit('disconnected');
             });
 
-            this.logger.info(`Connecting to ${ip}:${port}...`);
-            this.socket!.connect(port, ip, () => {
-                this.connecting = false;
-                this.connected = true;
-                this.emit('connected');
-                this.logger.info('LiveSplit connected!');
-                resolve();
-            });
-        })
+            if (settings.localPipe) {
+                // TODO: connect to the pipe
+                this.logger.info(`Connecting to ${PIPE_LOCATION}...`);
+                this.socket!.connect(PIPE_LOCATION, () => {
+                    this.connecting = false;
+                    this.connected = true;
+                    this.emit('connected');
+                    this.logger.info('LiveSplit connected!');
+                    resolve();
+                });
+            } else {
+                const { ip, port } = settings;
+
+                this.logger.info(`Connecting to ${ip}:${port}...`);
+                this.socket!.connect(port, ip, () => {
+                    this.connecting = false;
+                    this.connected = true;
+                    this.emit('connected');
+                    this.logger.info('LiveSplit connected!');
+                    resolve();
+                });
+            }
+        });
     }
 
     disconnect(): boolean {

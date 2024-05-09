@@ -10,7 +10,7 @@ export abstract class BaseSplitAction extends SingletonAction<LivesplitSettings>
             streamdeck.logger.debug(JSON.stringify(settings));
 
             if (settings.ip && settings.port) {
-                livesplit.connect(settings.ip, settings.port).catch((e) => {
+                livesplit.connect(settings).catch((e) => {
                     streamdeck.logger.warn(`Could not connect to livesplit: ${e}`)
                 });
             }
