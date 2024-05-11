@@ -9,8 +9,8 @@ Using `LiveSplit.Server` to control LiveSplit via your Stream Deck.
 - [x] Skip Split
 - [x] Split/Start timer
 - [x] Undo Split
-- [ ] Pause Timer
-- [ ] Resume Timer
+- [x] Pause Timer
+- [x] Resume Timer
 - [ ] RTA display
 - [ ] IGT display
 - And more....

@@ -6,6 +6,8 @@ import { instance as livesplit } from './livesplit';
 import { Unsplit } from './actions/unsplit';
 import { Reset } from './actions/reset';
 import { Skip } from './actions/skip';
+import { Pause } from './actions/pause';
+import { Resume } from './actions/resume';
 
 async function doConnect(action: Action<LivesplitSettings>, reconnect = false) {
     if (livesplit.isConnected && !reconnect) {
@@ -67,6 +69,8 @@ streamDeck.actions.registerAction(new Split());
 streamDeck.actions.registerAction(new Unsplit());
 streamDeck.actions.registerAction(new Reset());
 streamDeck.actions.registerAction(new Skip());
+streamDeck.actions.registerAction(new Pause());
+streamDeck.actions.registerAction(new Resume());
 
 async function registerDefaultSettings() {
     const defaultSettings = Object.freeze({

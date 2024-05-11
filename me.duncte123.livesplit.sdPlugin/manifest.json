@@ -11,7 +11,7 @@
   "Name": "LiveSplit",
   "Icon": "imgs/plugin/livesplit_icon_store",
   "URL": "https://github.com/duncte123/LiveSplit.StreamDeck",
-  "Version": "1.1.0.0",
+  "Version": "1.2.0.0",
   "Software": {
     "MinimumVersion": "6.5"
   },
@@ -54,7 +54,7 @@
     {
       "Icon": "imgs/plugin/livesplit_icon_flat",
       "Name": "Reset Timer",
-      "Tooltip": "Undo a split that you just did",
+      "Tooltip": "Reset the timer so you can retry",
       "UUID": "me.duncte123.livesplit.reset",
       "States": [
         {
@@ -74,6 +74,32 @@
           "Image": "imgs/plugin/livesplit_icon_flat",
           "TitleAlignment": "bottom",
           "Title": "Skip"
+        }
+      ]
+    },
+    {
+      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Name": "Pause",
+      "Tooltip": "Pauses the timer",
+      "UUID": "me.duncte123.livesplit.pause",
+      "States": [
+        {
+          "Image": "imgs/plugin/livesplit_icon_flat",
+          "TitleAlignment": "bottom",
+          "Title": "Pause"
+        }
+      ]
+    },
+    {
+      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Name": "Resume",
+      "Tooltip": "Resumes the timer",
+      "UUID": "me.duncte123.livesplit.resume",
+      "States": [
+        {
+          "Image": "imgs/plugin/livesplit_icon_flat",
+          "TitleAlignment": "bottom",
+          "Title": "Resume"
         }
       ]
     }
