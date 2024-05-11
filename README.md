@@ -11,6 +11,7 @@ Using `LiveSplit.Server` to control LiveSplit via your Stream Deck.
 - [x] Undo Split
 - [x] Pause Timer
 - [x] Resume Timer
+- [ ] Cycle between comparisons (not implemented in LS atm)
 - [ ] RTA display
 - [ ] IGT display
 - And more....
