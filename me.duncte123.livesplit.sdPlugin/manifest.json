@@ -102,6 +102,20 @@
           "Title": "Resume"
         }
       ]
+    },
+    {
+      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Name": "Timer",
+      "Tooltip": "Display the timer",
+      "UUID": "me.duncte123.livesplit.timer-display",
+      "PropertyInspectorPath": "pi/pi-timer/inspector.html",
+      "States": [
+        {
+          "Image": "imgs/actions/blank",
+          "TitleAlignment": "middle",
+          "Title": "00:00"
+        }
+      ]
     }
   ]
 }
