@@ -46,58 +46,7 @@
 
 
         <div class="tab-container" id="tab2">
-            <div type="checkbox" class="sdpi-item">
-                <div data-localize class="sdpi-item-label">Use local pipe</div>
-                <input data-localize class="sdpi-item-value sdProperty"
-                       name="localPipe"
-                       id="localPipe"
-                       value="localPipeOn"
-                       type="checkbox"/>
-                <label for="localPipe"><span></span></label>
-            </div>
-
-            <div class="sdpi-item ipAndPort">
-                <div data-localize class="sdpi-item-label">Computer IP</div>
-                <input data-localize class="sdpi-item-value"
-                       name="ip"
-                       type="text"
-                       value=""
-                       placeholder="127.0.0.1"/>
-            </div>
-
-            <div class="sdpi-item ipAndPort">
-                <div data-localize class="sdpi-item-label">Server Port</div>
-                <input data-localize class="sdpi-item-value"
-                       name="port"
-                       type="text"
-                       value=""
-                       placeholder="16834"/>
-            </div>
-
-            <div class="sdpi-item">
-                <div data-localize class="sdpi-item-label">Connection Status</div>
-                <div data-localize class="sdpi-item-value" id="status">Not Connected</div>
-            </div>
-
-            <div id="connection-info" style="display: none">
-                <div data-localize >
-                    Please check that the LiveSplit server is enabled
-                </div>
-                <div data-localize >
-                    To enable the server: right click LiveSplit > control > start server
-                </div>
-            </div>
-
-            <div class="sdpi-item">
-                <button
-                        class="sdpi-item-value"
-                        type="button"
-                        value="Reconnect"
-                        data-localize
-                        id="connect-livesplit">
-                    Reconnect
-                </button>
-            </div>
+            <app-global-settings></app-global-settings>
         </div>
     </form>
 </div>
@@ -113,7 +62,9 @@
 <script src="../../libs/js/dynamic-styles.js"></script>
 
 <!-- Property Inspector Source -->
-<script src="livesplit.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../components/global-settings.component.js"></script>
+<script src="../../default-property-inspector/livesplit.js"></script>
 <script src="inspector.js"></script>
 </body>
 

@@ -3,16 +3,9 @@
 
 let activeTab = '';
 
-const globalKeys = ['ip', 'port', 'localPipe'];
+const globalSettingsStorage = document.querySelector('app-global-settings');
+
 const localKeys = ['timingMethod', 'decimals'];
-
-const defaultSettings = Object.freeze({
-    ip: '127.0.0.1',
-    port: '16834',
-    localPipe: true,
-});
-
-let currentSettings = defaultSettings;
 
 let localSettings = {
     timingMethod: 'rta',
@@ -22,17 +15,11 @@ let localSettings = {
 function mergeSettings() {
     return {
         ...localSettings,
-        ...currentSettings,
+        ...globalSettingsStorage.settings,
     };
 }
 
 function splitAndStoreSettings(settings) {
-    globalKeys.forEach((key) => {
-        if (key in settings) {
-            currentSettings[key] = settings[key];
-        }
-    });
-
     localKeys.forEach((key) => {
         if (key in settings) {
             localSettings[key] = settings[key];
@@ -54,8 +41,7 @@ $PI.onConnected((jsn) => {
 
     $PI.setSettings(localSettings);
 
-    // Request the current global settings
-    $PI.getGlobalSettings();
+    globalSettingsStorage.initialize();
 
     form.addEventListener(
         'input',
@@ -64,21 +50,11 @@ $PI.onConnected((jsn) => {
             value.localPipe = value.localPipe === 'localPipeOn';
             value.decimals = value.decimals === 'yes';
 
-            const oldGlobal = { ...currentSettings };
-
             splitAndStoreSettings(value);
 
             $PI.setSettings(localSettings);
 
-            setIpPortVisibility(currentSettings.localPipe);
-            $PI.setGlobalSettings(currentSettings);
-
-            // Only send reconnect if the global settings have changed.
-            if (oldGlobal.toString() !== currentSettings.toString()) {
-                $PI.sendToPlugin({
-                    event: 'ls-reconnect',
-                });
-            }
+            globalSettingsStorage.settings = value;
         })
     );
 
@@ -96,16 +72,7 @@ $PI.onConnected((jsn) => {
 });
 
 $PI.onDidReceiveGlobalSettings(({payload}) => {
-    const {settings} = payload;
     const form = document.querySelector('#property-inspector');
-
-    currentSettings = {
-        ...defaultSettings,
-        ...settings,
-    };
-
-    setIpPortVisibility(currentSettings.localPipe);
-
     const tmp = mergeSettings();
 
     const formSettings = {
@@ -120,17 +87,9 @@ $PI.onDidReceiveGlobalSettings(({payload}) => {
     });
 });
 
-function setIpPortVisibility(usingLocalPipe) {
-    const items = document.querySelectorAll('.ipAndPort');
-
-    items.forEach((item) => {
-        item.style.display = usingLocalPipe ? 'none' : 'flex';
-    });
-}
-
 document.querySelector('#connect-livesplit').addEventListener('click', () => {
-    // save settings
-    $PI.setGlobalSettings(currentSettings);
+    // save settingsglobalSettingsStorage.forceSaveSettings();
+
 
     // Connect to livesplit!
     $PI.sendToPlugin({
