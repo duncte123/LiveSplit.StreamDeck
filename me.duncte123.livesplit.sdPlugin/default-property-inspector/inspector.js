@@ -6,19 +6,16 @@ let activeTab = '';
 const defaultSettings = Object.freeze({
     ip: '127.0.0.1',
     port: '16834',
+    localPipe: true,
 });
 
 let currentSettings = defaultSettings;
-
-let count = 0;
 
 $PI.onConnected((jsn) => {
     const form = document.querySelector('#property-inspector');
     const {actionInfo, appInfo, connection, messageType, port, uuid} = jsn;
     const {payload, context} = actionInfo;
     const {settings} = payload;
-
-    console.log('loaded??', ++count);
 
     // Request the current global settings
     $PI.getGlobalSettings();
