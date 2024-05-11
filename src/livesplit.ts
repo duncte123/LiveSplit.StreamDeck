@@ -48,7 +48,7 @@ export class LiveSplit extends EventEmitter {
                 const stringData = data.toString('utf-8').replace('\r\n', '');
 
                 this.emit('data', stringData);
-                this.logger.trace(`Data from LiveSplit: ${stringData}`);
+                // this.logger.trace(`Data from LiveSplit: ${stringData}`);
             });
 
             this.socket!.on('error', (err) => {
@@ -200,6 +200,18 @@ export class LiveSplit extends EventEmitter {
 
     async resume(): Promise<boolean> {
         return this.send('resume');
+    }
+
+    async getCurrentTime() {
+        return this.sendWithResponse('getcurrenttime');
+    }
+
+    async getCurrentRealTime() {
+        return this.sendWithResponse('getcurrentrealtime');
+    }
+
+    async getCurrentGameTime() {
+        return this.sendWithResponse('getcurrentgametime');
     }
 }
 

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>me.duncte123.livesplit timer viewer</title>
+    <link rel="stylesheet" href="../../libs/css/sdpi.css"/>
+</head>
+
+<body>
+<div class="sdpi-wrapper">
+    <div type="tabs" class="sdpi-item">
+        <div class="sdpi-item-label empty"></div>
+        <div class="tabs">
+            <div class="tab selected" data-target="#tab1" title="Visual settings">Visual</div>
+            <div class="tab" data-target="#tab2" title="LiveSplit settings">LiveSplit</div>
+        </div>
+    </div>
+    <hr class="tab-separator">
+    <form id="property-inspector">
+        <div class="tab-container" id="tab1">
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Timing method</div>
+                <select class="sdpi-item-value select" name="timingMethod" id="timingMethod">
+                    <option value="current">Current Timing Method</option>
+                    <option value="rta">Real Time</option>
+                    <option value="igt">Game Time</option>
+                </select>
+            </div>
+
+            <div type="checkbox" class="sdpi-item">
+                <div data-localize class="sdpi-item-label">Decimals</div>
+                <input data-localize class="sdpi-item-value sdProperty"
+                       name="decimals"
+                       id="decimals"
+                       value="yes"
+                       type="checkbox"/>
+                <label for="decimals"><span></span> Shown</label>
+            </div>
+        </div>
+
+
+        <div class="tab-container" id="tab2">
+            <app-global-settings></app-global-settings>
+        </div>
+    </form>
+</div>
+
+<!-- Stream Deck Libs -->
+<script src="../../libs/js/constants.js"></script>
+<script src="../../libs/js/prototypes.js"></script>
+<script src="../../libs/js/timers.js"></script>
+<script src="../../libs/js/utils.js"></script>
+<script src="../../libs/js/events.js"></script>
+<script src="../../libs/js/api.js"></script>
+<script src="../../libs/js/property-inspector.js"></script>
+<script src="../../libs/js/dynamic-styles.js"></script>
+
+<!-- Property Inspector Source -->
+<script src="../../js/utils.js"></script>
+<script src="../../components/global-settings.component.js"></script>
+<script src="../../default-property-inspector/livesplit.js"></script>
+<script src="inspector.js"></script>
+</body>
+
+</html>
