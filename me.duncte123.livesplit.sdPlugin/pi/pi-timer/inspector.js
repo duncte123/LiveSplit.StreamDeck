@@ -39,8 +39,6 @@ $PI.onConnected((jsn) => {
         ...settings,
     };
 
-    $PI.setSettings(localSettings);
-
     globalSettingsStorage.initialize();
 
     form.addEventListener(

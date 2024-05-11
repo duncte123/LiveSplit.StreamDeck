@@ -29,7 +29,12 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
             this.timer = null;
         }
 
-        this.settings = await ev.action.getSettings();
+        const fetched = await ev.action.getSettings();
+
+        this.settings = {
+            ...this.settings,
+            ...fetched,
+        };
 
         this.timer = setInterval(() => {
             this.updateButton(ev.action);
