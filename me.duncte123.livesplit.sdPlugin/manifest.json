@@ -52,7 +52,7 @@
       ]
     },
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/reset/icon",
       "Name": "Reset Timer",
       "Tooltip": "Reset the timer so you can retry",
       "UUID": "me.duncte123.livesplit.reset",
@@ -84,9 +84,7 @@
       "UUID": "me.duncte123.livesplit.pause",
       "States": [
         {
-          "Image": "imgs/actions/pause/icon",
-          "TitleAlignment": "bottom",
-          "Title": "Pause"
+          "Image": "imgs/actions/pause/icon"
         }
       ]
     },
@@ -97,9 +95,7 @@
       "UUID": "me.duncte123.livesplit.resume",
       "States": [
         {
-          "Image": "imgs/actions/resume/icon",
-          "TitleAlignment": "bottom",
-          "Title": "Resume"
+          "Image": "imgs/actions/resume/icon"
         }
       ]
     },

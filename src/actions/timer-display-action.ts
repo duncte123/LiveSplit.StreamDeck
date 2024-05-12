@@ -1,4 +1,4 @@
-import {
+import streamdeck, {
     action,
     Action,
     DidReceiveSettingsEvent,
@@ -24,6 +24,7 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
 
     async onWillAppear(ev: WillAppearEvent<TimerDisplaySettings>): Promise<void> {
         // Start timer
+        // TODO: global timer?
         if (this.timer != null) {
             clearInterval(this.timer);
             this.timer = null;
@@ -84,16 +85,23 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
             stripDecimals = true;
         }
 
-        // Strip decimals if requested
-        if (stripDecimals) {
-            time = time.split('.')[0];
-        } else {
-            const [ timePart, decimalPart ] = time.split('.');
-            const safeDecimals = decimalPart?.substring(0, 2);
+        // If we have days, they may start with a period.
+        const lastDotIndex = time.lastIndexOf('.');
+        let timePart;
+        let decimalPart;
 
-            time = `${timePart}${safeDecimals ? `.${safeDecimals}` : '.00'}`;
+        if (lastDotIndex > -1) {
+            timePart = time.slice(0, lastDotIndex);
+            decimalPart = time.slice(lastDotIndex + 1);
+        } else {
+            timePart = time;
+            decimalPart = null;
         }
 
-        await action.setTitle(time.trim());
+        const safeDecimals = decimalPart?.substring(0, 2);
+        // Strip decimals if requested
+        const decimalDisplay = stripDecimals ? '' : safeDecimals ? `.${safeDecimals}` : '.00';
+
+        await action.setTitle(`${timePart}${decimalDisplay}`.trim());
     }
 }
