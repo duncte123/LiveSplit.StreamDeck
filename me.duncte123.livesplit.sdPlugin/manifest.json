@@ -32,7 +32,7 @@
       "UUID": "me.duncte123.livesplit.split",
       "States": [
         {
-          "Image": "imgs/plugin/livesplit_icon_flat",
+          "Image": "imgs/actions/split/icon",
           "TitleAlignment": "bottom",
           "Title": "Split"
         }
@@ -45,7 +45,7 @@
       "UUID": "me.duncte123.livesplit.unsplit",
       "States": [
         {
-          "Image": "imgs/plugin/livesplit_icon_flat",
+          "Image": "imgs/actions/undo/icon",
           "TitleAlignment": "bottom",
           "Title": "Undo Split"
         }
@@ -58,7 +58,7 @@
       "UUID": "me.duncte123.livesplit.reset",
       "States": [
         {
-          "Image": "imgs/plugin/livesplit_icon_flat",
+          "Image": "imgs/actions/reset/icon",
           "TitleAlignment": "bottom",
           "Title": "Reset"
         }
@@ -71,7 +71,7 @@
       "UUID": "me.duncte123.livesplit.skip",
       "States": [
         {
-          "Image": "imgs/plugin/livesplit_icon_flat",
+          "Image": "imgs/actions/skip/icon",
           "TitleAlignment": "bottom",
           "Title": "Skip"
         }
