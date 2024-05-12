@@ -1,4 +1,4 @@
-import streamdeck, {
+import {
     action,
     Action,
     DidReceiveSettingsEvent,
@@ -15,53 +15,68 @@ export interface TimerDisplaySettings {
 
 @action({ UUID: 'me.duncte123.livesplit.timer-display' })
 export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
-    private timer: NodeJS.Timeout | null = null;
+    private timers: {
+        [key: string]: {
+            timer: NodeJS.Timeout;
+            settings: TimerDisplaySettings;
+        }
+    } = {};
 
-    private settings: TimerDisplaySettings = {
+    private defaultSettings: TimerDisplaySettings = {
         timingMethod: 'current',
         decimals: false,
     };
 
     async onWillAppear(ev: WillAppearEvent<TimerDisplaySettings>): Promise<void> {
+        const ctx = ev.action.id;
+
         // Start timer
         // TODO: global timer?
-        if (this.timer != null) {
-            clearInterval(this.timer);
-            this.timer = null;
+        if (ctx in this.timers) {
+            clearInterval(this.timers[ctx].timer);
+            delete this.timers[ctx];
         }
 
         const fetched = await ev.action.getSettings();
 
-        this.settings = {
-            ...this.settings,
-            ...fetched,
+        this.timers[ctx] = {
+            settings: {
+                ...this.defaultSettings,
+                ...fetched,
+            },
+            timer: setInterval(() => {
+                this.updateButton(ev.action);
+            }, 1000), // Can we go faster? Should we?
         };
-
-        this.timer = setInterval(() => {
-            this.updateButton(ev.action);
-        }, 1000); // Can we go faster? Should we?
     }
 
     onDidReceiveSettings(ev: DidReceiveSettingsEvent<TimerDisplaySettings>) {
-        this.settings = {
-            ...this.settings,
-            ...ev.payload.settings,
-        };
+        const ctx = ev.action.id;
+
+        if (ctx in this.timers) {
+            this.timers[ctx].settings = {
+                ...this.defaultSettings,
+                ...ev.payload.settings,
+            };
+        }
     }
 
     async onWillDisappear(ev: WillDisappearEvent<TimerDisplaySettings>): Promise<void> {
+        const ctx = ev.action.id;
+
         // Stop timer
-        if (this.timer != null) {
-            clearInterval(this.timer);
-            this.timer = null;
+        if (ctx in this.timers) {
+            clearInterval(this.timers[ctx].timer);
+            delete this.timers[ctx];
         }
     }
 
     async updateButton(action: Action<any>) {
         let time = 'OFFLINE';
+        const settings = this.timers[action.id].settings;
 
         if (livesplit.isConnected) {
-            switch (this.settings.timingMethod) {
+            switch (settings.timingMethod) {
                 case 'rta':
                     time = await livesplit.getCurrentRealTime();
                     break;
@@ -75,7 +90,7 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
             }
         }
 
-        let stripDecimals = !this.settings.decimals;
+        let stripDecimals = !settings.decimals;
 
         // Remove the hour mark if it's 00
         if (time.startsWith('00:')) {
