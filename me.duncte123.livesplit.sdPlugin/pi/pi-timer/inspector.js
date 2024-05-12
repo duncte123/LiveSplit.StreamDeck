@@ -9,7 +9,7 @@ const localKeys = ['timingMethod', 'decimals'];
 
 let localSettings = {
     timingMethod: 'rta',
-    decimals: true,
+    decimals: false,
 };
 
 function mergeSettings() {

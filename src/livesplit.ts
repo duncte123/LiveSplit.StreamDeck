@@ -47,7 +47,7 @@ export class LiveSplit extends EventEmitter {
             this.socket!.on('data', (data) => {
                 const stringData = data.toString('utf-8').replace('\r\n', '');
 
-                this.emit('data', stringData);
+                this.emit('data', stringData.trim());
                 // this.logger.trace(`Data from LiveSplit: ${stringData}`);
             });
 

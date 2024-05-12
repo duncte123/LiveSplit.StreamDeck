@@ -19,7 +19,7 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
 
     private settings: TimerDisplaySettings = {
         timingMethod: 'current',
-        decimals: true,
+        decimals: false,
     };
 
     async onWillAppear(ev: WillAppearEvent<TimerDisplaySettings>): Promise<void> {
@@ -74,11 +74,26 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
             }
         }
 
-        // Strip decimals if requested
-        if (!this.settings.decimals) {
-            time = time.split('.')[0];
+        let stripDecimals = !this.settings.decimals;
+
+        // Remove the hour mark if it's 00
+        if (time.startsWith('00:')) {
+            time = time.substring(3);
+        } else {
+            // always strip decimals if we have hours.
+            stripDecimals = true;
         }
 
-        await action.setTitle(time);
+        // Strip decimals if requested
+        if (stripDecimals) {
+            time = time.split('.')[0];
+        } else {
+            const [ timePart, decimalPart ] = time.split('.');
+            const safeDecimals = decimalPart?.substring(0, 2);
+
+            time = `${timePart}${safeDecimals ? `.${safeDecimals}` : '.00'}`;
+        }
+
+        await action.setTitle(time.trim());
     }
 }

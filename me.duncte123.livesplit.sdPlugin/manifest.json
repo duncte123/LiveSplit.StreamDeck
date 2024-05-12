@@ -26,7 +26,7 @@
   "PropertyInspectorPath": "default-property-inspector/inspector.html",
   "Actions": [
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/split/icon",
       "Name": "Split",
       "Tooltip": "Start or split your timer",
       "UUID": "me.duncte123.livesplit.split",
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/undo/icon",
       "Name": "Undo Split",
       "Tooltip": "Undo a split that you just did",
       "UUID": "me.duncte123.livesplit.unsplit",
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/skip/icon",
       "Name": "Skip Split",
       "Tooltip": "Skip a split",
       "UUID": "me.duncte123.livesplit.skip",
@@ -78,33 +78,33 @@
       ]
     },
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/pause/icon",
       "Name": "Pause",
       "Tooltip": "Pauses the timer",
       "UUID": "me.duncte123.livesplit.pause",
       "States": [
         {
-          "Image": "imgs/plugin/livesplit_icon_flat",
+          "Image": "imgs/actions/pause/icon",
           "TitleAlignment": "bottom",
           "Title": "Pause"
         }
       ]
     },
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/resume/icon",
       "Name": "Resume",
       "Tooltip": "Resumes the timer",
       "UUID": "me.duncte123.livesplit.resume",
       "States": [
         {
-          "Image": "imgs/plugin/livesplit_icon_flat",
+          "Image": "imgs/actions/resume/icon",
           "TitleAlignment": "bottom",
           "Title": "Resume"
         }
       ]
     },
     {
-      "Icon": "imgs/plugin/livesplit_icon_flat",
+      "Icon": "imgs/actions/timer-display/icon",
       "Name": "Timer",
       "Tooltip": "Display the timer",
       "UUID": "me.duncte123.livesplit.timer-display",
