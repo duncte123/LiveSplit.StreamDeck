@@ -1,6 +1,7 @@
 [LS-server]: https://github.com/LiveSplit/LiveSplit.Server/releases
 
-# LiveSplit.StreamDeck
+# LiveSplit.StreamDeck ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fmp-gateway.elgato.com%2Fproducts%3Fname%3DLiveSplit&query=results%5B0%5D.download_count&logo=elgato&label=downloads)
+
 
 Using `LiveSplit.Server` to control LiveSplit via your Stream Deck.
 
