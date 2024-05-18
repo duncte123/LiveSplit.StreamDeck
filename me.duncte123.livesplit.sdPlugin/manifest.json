@@ -105,6 +105,7 @@
       "Tooltip": "Display the timer",
       "UUID": "me.duncte123.livesplit.timer-display",
       "PropertyInspectorPath": "pi/pi-timer/inspector.html",
+      "UserTitleEnabled": false,
       "States": [
         {
           "Image": "imgs/actions/blank",

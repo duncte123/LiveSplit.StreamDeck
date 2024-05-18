@@ -61,6 +61,8 @@ class GlobalSettings extends HTMLElement {
             }
         });
 
+        this.#setIpPortVisibility();
+
         $PI.setGlobalSettings(this.#currentSettings);
 
         // Only send reconnect if the global settings have changed.
@@ -82,11 +84,16 @@ class GlobalSettings extends HTMLElement {
                        type="checkbox"/>
                 <label for="localPipe"><span></span></label>
             </div>
+            
+            <details class="message ipAndPort">
+                <summary>To use TCP on the same computer, please set the IP to <code>localhost</code></summary>
+            </details>
 
             <div class="sdpi-item ipAndPort">
                 <div data-localize class="sdpi-item-label">Computer IP</div>
                 <input data-localize class="sdpi-item-value"
                        name="ip"
+                       id="ip"
                        type="text"
                        value=""
                        placeholder="127.0.0.1"/>
