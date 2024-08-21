@@ -13,15 +13,24 @@ export interface TimerDisplaySettings {
     decimals: boolean;
 }
 
+const storedTimers: { [actionId: string]: StoredTimer } = {};
+
+interface StoredTimer {
+    action: Action<any>;
+    settings: TimerDisplaySettings;
+    tick: (action: Action<any>, settings: TimerDisplaySettings) => void | Promise<void>;
+}
+
+setInterval(() => {
+    const timers = Object.values(storedTimers);
+
+    for (const timer of timers) {
+        timer.tick(timer.action, timer.settings);
+    }
+}, 1000); // Can we go faster? Should we?
+
 @action({ UUID: 'me.duncte123.livesplit.timer-display' })
 export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
-    private timers: {
-        [key: string]: {
-            timer: NodeJS.Timeout;
-            settings: TimerDisplaySettings;
-        }
-    } = {};
-
     private defaultSettings: TimerDisplaySettings = {
         timingMethod: 'current',
         decimals: false,
@@ -30,31 +39,30 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
     async onWillAppear(ev: WillAppearEvent<TimerDisplaySettings>): Promise<void> {
         const ctx = ev.action.id;
 
-        // Start timer
-        // TODO: global timer?
-        if (ctx in this.timers) {
-            clearInterval(this.timers[ctx].timer);
-            delete this.timers[ctx];
+        if (ctx in storedTimers) {
+            delete storedTimers[ctx];
         }
 
         const fetched = await ev.action.getSettings();
 
-        this.timers[ctx] = {
+        // Start timer
+        storedTimers[ctx] = {
+            action: ev.action,
             settings: {
                 ...this.defaultSettings,
                 ...fetched,
             },
-            timer: setInterval(() => {
-                this.updateButton(ev.action);
-            }, 1000), // Can we go faster? Should we?
+            tick: (action, settings) => {
+                this.updateButton(action, settings);
+            }
         };
     }
 
     onDidReceiveSettings(ev: DidReceiveSettingsEvent<TimerDisplaySettings>) {
         const ctx = ev.action.id;
 
-        if (ctx in this.timers) {
-            this.timers[ctx].settings = {
+        if (ctx in storedTimers) {
+            storedTimers[ctx].settings = {
                 ...this.defaultSettings,
                 ...ev.payload.settings,
             };
@@ -65,16 +73,15 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
         const ctx = ev.action.id;
 
         // Stop timer
-        if (ctx in this.timers) {
-            clearInterval(this.timers[ctx].timer);
-            delete this.timers[ctx];
+        if (ctx in storedTimers) {
+            delete storedTimers[ctx];
         }
     }
 
-    async updateButton(action: Action<any>) {
+    async updateButton(action: Action<any>, settings: TimerDisplaySettings) {
         let time = 'OFFLINE';
-        const settings = this.timers[action.id].settings;
 
+        // TODO: ask LS once and tell the buttons
         if (livesplit.isConnected) {
             switch (settings.timingMethod) {
                 case 'rta':
@@ -117,6 +124,7 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
         // Strip decimals if requested
         const decimalDisplay = stripDecimals ? '' : safeDecimals ? `.${safeDecimals}` : '.00';
 
-        await action.setTitle(`${timePart}${decimalDisplay}`.trim());
+        // await action.setTitle(`${timePart}${decimalDisplay}`.trim());
+        await action.setTitle(settings.timingMethod);
     }
 }

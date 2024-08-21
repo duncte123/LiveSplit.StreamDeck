@@ -74,7 +74,7 @@ streamDeck.actions.registerAction(new Pause());
 streamDeck.actions.registerAction(new Resume());
 streamDeck.actions.registerAction(new TimerDisplayAction());
 
-async function registerDefaultSettings() {
+async function registerDefaultSettings(): Promise<LivesplitSettings> {
     const defaultSettings = Object.freeze({
         ip: '127.0.0.1',
         port: '16834',
@@ -90,6 +90,8 @@ async function registerDefaultSettings() {
     parsedSettings.localPipe = parsedSettings.ip === '127.0.0.1';
 
     await streamDeck.settings.setGlobalSettings(parsedSettings);
+
+    return parsedSettings;
 }
 
 streamDeck.connect().then(() => {

@@ -8,7 +8,7 @@ const globalSettingsStorage = document.querySelector('app-global-settings');
 const localKeys = ['timingMethod', 'decimals'];
 
 let localSettings = {
-    timingMethod: 'rta',
+    timingMethod: 'current',
     decimals: false,
 };
 
