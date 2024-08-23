@@ -81,7 +81,7 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
     async updateButton(action: Action<any>, settings: TimerDisplaySettings) {
         let time = 'OFFLINE';
 
-        // TODO: ask LS once and tell the buttons
+        // TODO: ask LS once and tell the buttons??
         if (livesplit.isConnected) {
             switch (settings.timingMethod) {
                 case 'rta':
@@ -124,7 +124,6 @@ export class TimerDisplayAction extends SingletonAction<TimerDisplaySettings> {
         // Strip decimals if requested
         const decimalDisplay = stripDecimals ? '' : safeDecimals ? `.${safeDecimals}` : '.00';
 
-        // await action.setTitle(`${timePart}${decimalDisplay}`.trim());
-        await action.setTitle(settings.timingMethod);
+        await action.setTitle(`${timePart}${decimalDisplay}`.trim());
     }
 }
