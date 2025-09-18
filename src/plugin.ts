@@ -64,7 +64,7 @@ function disconnectLS() {
 process.on('exit', () => { disconnectLS(); });
 process.on('SIGINT', () => { disconnectLS(); });
 
-streamDeck.logger.setLevel(LogLevel.TRACE);
+streamDeck.logger.setLevel(LogLevel.DEBUG);
 
 streamDeck.actions.registerAction(new Split());
 streamDeck.actions.registerAction(new Unsplit());
@@ -87,7 +87,7 @@ async function registerDefaultSettings(): Promise<LivesplitSettings> {
     };
 
     // Force use the local pipe if the ip is local host
-    parsedSettings.localPipe = parsedSettings.ip === '127.0.0.1';
+    parsedSettings.localPipe = parsedSettings.ip === '127.0.0.1' && parsedSettings.port === '16834';
 
     await streamDeck.settings.setGlobalSettings(parsedSettings);
 

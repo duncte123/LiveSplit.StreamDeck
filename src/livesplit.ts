@@ -81,7 +81,7 @@ export class LiveSplit extends EventEmitter {
                 const { ip, port } = settings;
 
                 this.logger.info(`Connecting to ${ip}:${port}...`);
-                this.socket!.connect(port, ip, connectedCb);
+                this.socket!.connect(parseInt(port, 10), ip, connectedCb);
             }
         });
     }
@@ -125,7 +125,7 @@ export class LiveSplit extends EventEmitter {
             this.sendNext();
         }, this.waitTimeout);
 
-        const listener = (data: string) => {
+        const listener = (data: any) => {
             this.commands.shift();
             clearTimeout(timeout);
             nextCommand.resolve(data);
@@ -143,14 +143,14 @@ export class LiveSplit extends EventEmitter {
         return `${noNewlines}\r\n`;
     }
 
-    private async sendWithResponse(data: string): Promise<string> {
+    private async sendWithResponse<T>(data: string): Promise<T> {
         if (!this.connected) {
             throw new Error('Not connected to livesplit!');
         }
 
         const command = this.parseCommand(data);
 
-        return new Promise<any>((resolve) => {
+        return new Promise<T>((resolve) => {
             this.commands.push({
                 command,
                 resolve,
@@ -178,6 +178,10 @@ export class LiveSplit extends EventEmitter {
         return true;
     }
 
+    async start(): Promise<boolean> {
+        return this.send('starttimer');
+    }
+
     async startOrSplit(): Promise<boolean> {
         return this.send('startorsplit');
     }
@@ -203,15 +207,23 @@ export class LiveSplit extends EventEmitter {
     }
 
     async getCurrentTime() {
-        return this.sendWithResponse('getcurrenttime');
+        return this.sendWithResponse<string>('getcurrenttime');
     }
 
     async getCurrentRealTime() {
-        return this.sendWithResponse('getcurrentrealtime');
+        return this.sendWithResponse<string>('getcurrentrealtime');
     }
 
     async getCurrentGameTime() {
-        return this.sendWithResponse('getcurrentgametime');
+        return this.sendWithResponse<string>('getcurrentgametime');
+    }
+
+    async getSplitIndex() {
+        return this.sendWithResponse<number>('getsplitindex');
+    }
+
+    async getTimerPhase() {
+        return this.sendWithResponse<string>('getcurrenttimerphase');
     }
 }
 
